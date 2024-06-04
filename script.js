@@ -37,9 +37,19 @@ function filtrarPesquisa(){
     const videos = document.querySelectorAll(".videos__item");
 
     if(barraDePesquisa.value |= ""){
+        for(Let video of videos){
+            Let titulo = video.querySelector(".titulo-video").textContent.toLowerCase();
+            Let valorFiltro = barraDePesquisa.value.toLowerCase();
 
+            if(!titulo.includes(valorFiltro)){
+                video.style.display = "none";
+            } else {
+                video.style.display = "block";
+            }
+
+        }
     } else {
-        
+        video.style.display = "block"
     }
 }
 
