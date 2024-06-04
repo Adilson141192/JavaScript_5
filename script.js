@@ -53,3 +53,16 @@ function filtrarPesquisa(){
     }
 }
 
+const botaoCategoria = document.querySelectorAll(".superior__item");
+
+botaoCategoria.forEach((botao) => {
+    Let nomeCategoria = botao.getAttribute("name");
+    botao.addEventListener("click", () => filtrarPorCategoria(nomeCategoria));
+})
+
+function filtrarPorCategoria(filtro){
+    const videos = document.querySelectorAll(".videos__item");
+    for (Let video of videos){
+        
+    }
+}
