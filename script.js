@@ -6,7 +6,9 @@ async function buscarEMostrarVideos() {
         const busca = await fetch("http://localhost:3000/videos");
         const videos = await busca.json();
 
-            videos.forEach((video) => {
+        videos.forEach((video) => {
+            const titulo = video.querySelector('.titulo-video').textContent.toLowerCase();
+
                 if (video.categoria == ""){
                     throw new Error('Vídeo não tem categoria')
                 }
@@ -17,6 +19,7 @@ async function buscarEMostrarVideos() {
                         <img class="img-canal" src="${video.imagem} alt="Logo do Canal">
                         <h3 class="titulo-video">${video.titulo}</h3>
                         <p class="titulo-canal">${video.descricao}</p>
+                        <p class="categoria" hidden>${video.categoria}</p>
                     </div>
                 </li>
                 `;
@@ -29,17 +32,20 @@ async function buscarEMostrarVideos() {
 
 buscarEMostrarVideos();
 
-const barraDePesquisa = document.querySelector("pesquisar__input");
+//Código omitido
+
+const barraDePesquisa = document.querySelector(".pesquisar__input");
 
 barraDePesquisa.addEventListener("input", filtrarPesquisa);
 
-function filtrarPesquisa(){
-    const videos = document.querySelectorAll(".videos__item");
+function filtrarPesquisa() {
+    const videos = document.querySelectorAll('.videos__item');
+    const valorFiltro = barraDePesquisa.value.toLowerCase();  
 
-    if(barraDePesquisa.value |= ""){
-        for(Let video of videos){
-            Let titulo = video.querySelector(".titulo-video").textContent.toLowerCase();
-            Let valorFiltro = barraDePesquisa.value.toLowerCase();
+    if(barraDePesquisa.value != ""){
+        for(let video of videos){
+            let titulo = video.querySelector(".titulo-video").textContent.toLowerCase();
+            let valorFiltro = barraDePesquisa.value.toLowerCase();
 
             if(!titulo.includes(valorFiltro)){
                 video.style.display = "none";
@@ -48,6 +54,7 @@ function filtrarPesquisa(){
             }
 
         }
+
     } else {
         video.style.display = "block"
     }
@@ -55,14 +62,23 @@ function filtrarPesquisa(){
 
 const botaoCategoria = document.querySelectorAll(".superior__item");
 
+const botaoCategoria = document.querySelectorAll(".superior__item");
+
 botaoCategoria.forEach((botao) => {
-    Let nomeCategoria = botao.getAttribute("name");
+    let nomeCategoria = botao.getAttribute("name");
     botao.addEventListener("click", () => filtrarPorCategoria(nomeCategoria));
 })
 
 function filtrarPorCategoria(filtro){
     const videos = document.querySelectorAll(".videos__item");
-    for (Let video of videos){
-        
+    for(let video of videos){
+        let categoria = video.querySelector(".categoria").textContent.toLowerCase();
+        let valorFiltro = filtro.toLowerCase();
+
+        if(!categoria.includes(valorFiltro) && valorFiltro != 'tudo'){
+            video.style.display = "none";
+        } else {
+            video.style.display = "block";
+        }
     }
 }
